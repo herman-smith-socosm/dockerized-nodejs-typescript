@@ -1,0 +1,51 @@
+# apiVersion: v1
+# kind: Service
+# metadata:
+#   name: simple-nodejs
+#   labels:
+#     app: simple-nodejs
+# spec:
+#   ports:
+#     - port: 3010
+#   type: NodePort
+#   selector:
+#     app: simple-nodejs
+# ---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: simple-nodejs
+  labels:
+    app: simple-nodejs
+spec:
+  selector:
+    matchLabels:
+      app: simple-nodejs
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: simple-nodejs
+    spec:
+      containers:
+      - image: simple-nodejs:v0.1.0
+        name: simple-nodejs-a
+        env:
+        - name: APP_DESCRIPTOR
+          value: "k8s Alpha"
+        - name: SERVER_PORT
+          value: "3010"
+        ports:
+        - containerPort: 3010
+          name: simple-nodejs-a
+      - image: simple-nodejs:v0.1.0
+        name: simple-nodejs-b
+        env:
+        - name: APP_DESCRIPTOR
+          value: "k8s Bravo"
+        - name: SERVER_PORT
+          value: "3011"
+        ports:
+        - containerPort: 3011
+          name: simple-nodejs-b
