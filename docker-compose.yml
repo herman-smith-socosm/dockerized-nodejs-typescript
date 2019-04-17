@@ -10,4 +10,3 @@ services:
     environment:
       - APP_DESCRIPTOR=dockerized
       - SERVER_PORT=80
-      - ACME_CHALLENGE=B90U29t43br1xiFyu7N_hg1D3CcE8URCARc0bd2DgdA.AGorcgOrynTYzvtqIqRG3aBQj25JbmVr2nT3GhffRR4
